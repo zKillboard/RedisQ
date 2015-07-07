@@ -1,5 +1,7 @@
 <?php
 
+require_once "config.php";
+
 // redisq class autoloader
 spl_autoload_register('redisqautoload');
 
@@ -14,4 +16,4 @@ function redisqautoload($className)
 }
 
 $redis = new Redis();
-$redis->pconnect("localhost");
+$redis->pconnect($redisServer, $redisPort);
