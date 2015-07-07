@@ -1,0 +1,11 @@
+{
+    "name": "zkillboard/redisq",
+    "description": "A simple RedisQ package",
+    "authors": [
+        {
+            "name": "Clinton Weiss",
+            "email": "cvweiss@gmail.com"
+        }
+    ],
+    "require": {}
+}
