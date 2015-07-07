@@ -1,11 +1,12 @@
 {
     "name": "zkillboard/redisq",
-    "description": "A simple RedisQ package",
+    "description": "A simple queue based on Redis",
     "authors": [
         {
             "name": "Clinton Weiss",
             "email": "cvweiss@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {}
 }
