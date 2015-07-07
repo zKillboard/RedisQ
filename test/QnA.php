@@ -4,7 +4,7 @@ require_once "../init.php";
 
 // First, register as a listener
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "$server/listen.php");
+curl_setopt($ch, CURLOPT_URL, "$redisQServer/listen.php");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, "queueID=TestQ");
@@ -15,7 +15,7 @@ print_r(json_decode($response,true));
 echo "\n";
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "$server/queue.php");
+curl_setopt($ch, CURLOPT_URL, "$redisQServer/queue.php");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, 1);
 $auth = $queueAuth[0];
@@ -29,7 +29,7 @@ print_r(json_decode($response,true));
 
 echo "Now listen for the package we just queued\n";
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "$server/listen.php");
+curl_setopt($ch, CURLOPT_URL, "$redisQServer/listen.php");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, "queueID=TestQ");
