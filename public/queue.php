@@ -14,7 +14,9 @@ $authPass = @$_POST['pass'];
 $package = @$_POST['package'];
 
 $authed = false;
-foreach ($queueAuth as $user=>$pass) {
+foreach ($queueAuth as $auth) {
+	$user = (string) key($auth);
+	$pass = $auth[$user];
 	if ($authUser == $user && $authPass == $pass) $authed |= true;
 	if ($authed) break;
 }
@@ -32,3 +34,4 @@ if ($package == null) {
 }
 
 RedisQ\RedisQ::queueObject($package);
+echo '{"success":true}';
