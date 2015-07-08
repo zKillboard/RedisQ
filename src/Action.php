@@ -8,7 +8,7 @@ class Action
 
     public static function listen($server)
     {
-        $json = self::doPost("$server/listen.php", 'listen=true');
+        $json = self::doPost("$server/listen.php", '');
 
         return unserialize($json['package']);
     }
