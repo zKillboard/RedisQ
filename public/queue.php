@@ -15,10 +15,14 @@ $package = @$_POST['package'];
 
 $authed = false;
 foreach ($queueAuth as $auth) {
-	$user = (string) key($auth);
-	$pass = $auth[$user];
-	if ($authUser == $user && $authPass == $pass) $authed |= true;
-	if ($authed) break;
+    $user = (string) key($auth);
+    $pass = $auth[$user];
+    if ($authUser == $user && $authPass == $pass) {
+        $authed |= true;
+    }
+    if ($authed) {
+        break;
+    }
 }
 
 if ($authed === false) {

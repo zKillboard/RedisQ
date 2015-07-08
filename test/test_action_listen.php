@@ -1,5 +1,8 @@
 <?php
 
-require_once "../init.php";
+require_once '../init.php';
 
-print_r(RedisQ\Action::listen());
+do {
+    $foo = RedisQ\Action::listen('redisq.zkillboard.com');
+    echo $foo['killID']."\n";
+} while ($foo != null);

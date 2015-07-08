@@ -20,13 +20,14 @@ class Action
 
     private static function doPost($url, $fields)
     {
-	if (self::$ch === null) {
-		self::$ch = curl_init();
+        if (self::$ch === null) {
+            self::$ch = curl_init();
         }
         curl_setopt(self::$ch, CURLOPT_URL, $url);
         curl_setopt(self::$ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt(self::$ch, CURLOPT_POST, 1);
         curl_setopt(self::$ch, CURLOPT_POSTFIELDS, $fields);
-	return json_decode(curl_exec(self::$ch), true);
+
+        return json_decode(curl_exec(self::$ch), true);
     }
 }
