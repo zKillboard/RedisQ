@@ -4,28 +4,29 @@ namespace RedisQ;
 
 class Action
 {
+    private static $ch = null;
+
     public static function listen($server)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$server/listen.php");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, 'listen=true');
-        $response = curl_exec($ch);
-        $json = json_decode($response, true);
+        $json = self::doPost("$server/listen.php", 'listen=true');
 
         return unserialize($json['package']);
     }
 
     public static function queue($server, $user, $pass, $package)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$server/queue.php");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "user=$user&pass=$pass&package=".urlencode(serialize($package)));
-        $response = curl_exec($ch);
+        return self::doPost("$server/queue.php", "user=$user&pass=$pass&package=".urlencode(serialize($package)));
+    }
 
-        return json_decode($response, true);
+    private static function doPost($url, $fields)
+    {
+	if (self::$ch === null) {
+		self::$ch = curl_init();
+        }
+        curl_setopt(self::$ch, CURLOPT_URL, $url);
+        curl_setopt(self::$ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(self::$ch, CURLOPT_POST, 1);
+        curl_setopt(self::$ch, CURLOPT_POSTFIELDS, $fields);
+	return json_decode(curl_exec(self::$ch), true);
     }
 }
