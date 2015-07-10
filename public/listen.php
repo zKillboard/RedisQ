@@ -7,7 +7,8 @@ if ($queueID === null) {
     $queueID = RedisQ\IP::get();
 }
 
-$package = RedisQ\RedisQ::listen($queueID);
+$package = unserialize(RedisQ\RedisQ::listen($queueID));
 
 $response = ['package' => $package];
+header('Content-Type: application/json');
 echo json_encode($response);
