@@ -10,7 +10,7 @@ class Action
     {
         $json = self::doPost("$server/listen.php", '');
 
-        return unserialize($json['package']);
+        return $json['package'];
     }
 
     public static function queue($server, $user, $pass, $package)
