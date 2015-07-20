@@ -41,7 +41,7 @@ class RedisQ
 
         self::registerListener($rQueueID);
 
-        $pop = $redis->blPop($rQueueID, 1);
+        $pop = $redis->blPop($rQueueID, 10);
         if (!isset($pop[1])) {
             return;
         }
