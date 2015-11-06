@@ -8,6 +8,7 @@ if ($queueID === null) {
 }
 
 $package = unserialize(RedisQ\RedisQ::listen($queueID));
+if ($package === false) $package = null;
 
 $response = ['package' => $package];
 header('Content-Type: application/json');
