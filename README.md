@@ -41,7 +41,7 @@ Not at this time. I went with stupidly simple simplicity when I made this and di
 
 Websockets are great, sure, but I wanted to write something that was damn easy to implement in any language. RedisQ isn't trying to be fancy like websockets, it is only trying to disemminate killmails in a quick and very simple fashion.
 
-If you really want to use websockets to listen to zKillboard's killmails, credit goes to [andimiller](https://github.com/andimiller) for creating a websocket that listens to RedisQ. The endpoint is: [wss://api.pizza.moe/stream/killmails/](wss://api.pizza.moe/stream/killmails/) and you can find more documentation here as well: https://api.pizza.moe/
+If you really want to use websockets to listen to zKillboard's killmails, credit goes to [andimiller](https://github.com/andimiller) for creating a websocket that listens to RedisQ. The endpoint is: [wss://api.pizza.moe/stream/killmails/](wss://api.pizza.moe/stream/killmails/) and you can find more documentation here as well: https://api.pizza.moe/ and the source can be found at https://github.com/xxpizzaxx/zkb-ws-relay
 
 ###### Why is it called RedisQ?
 
