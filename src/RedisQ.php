@@ -17,12 +17,12 @@ class RedisQ
 
         // Store an instance of the object
         $objectID = 'redisQ:objectID:'.uniqID().md5($wrapped);
-        $multi->setex($objectID, 7200, $wrapped);
+        $multi->setex($objectID, 9600, $wrapped);
 
         // Add objectID to all queues
         foreach ($queues as $queueID) {
             $multi->lPush($queueID, $objectID);
-            $multi->expire($queueID, 3600);
+            $multi->expire($queueID, 9600);
         }
         $multi->exec();
     }

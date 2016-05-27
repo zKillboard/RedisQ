@@ -5,9 +5,9 @@ namespace RedisQ;
 class RedisTtlSortedSet
 {
     private $queueName;
-    private $ttl = 3600;
+    private $ttl = 9600;
 
-    public function __construct($queueName, $ttl = 3600)
+    public function __construct($queueName, $ttl = 9600)
     {
         $this->queueName = $queueName;
         $this->ttl = $ttl;
