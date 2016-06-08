@@ -11,12 +11,14 @@ class RedisQ
         $wrapped = serialize($object);
 
         $allQueues = new RedisTtlSortedSet('redisQ:allQueues');
+	$objectQueues = new RedisTtlSortedSet('objectQueues');
         $queues = $allQueues->getMembers();
 
         $multi = $redis->multi();
 
         // Store an instance of the object
         $objectID = 'redisQ:objectID:'.uniqID().md5($wrapped);
+	$objectQueues->add(time(), $objectID);
         $multi->setex($objectID, 9600, $wrapped);
 
         // Add objectID to all queues
