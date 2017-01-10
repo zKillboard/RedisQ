@@ -35,21 +35,24 @@ class RedisQ
         $allQueues->add(time(), $queueID);
     }
 
-    public function listen($queueID)
+    public function listen($queueID, $timeToWait = 10)
     {
         global $redis;
+
+        $timeToWait = max(1, min(10, $timeToWait));
 
         $rQueueID = "redisQ:queueID:$queueID";
 
         self::registerListener($rQueueID);
 
-        $pop = $redis->blPop($rQueueID, 10);
+        $pop = $redis->blPop($rQueueID, $timeToWait);
         if (!isset($pop[1])) {
             return;
         }
 
         $objectID = $pop[1];
         $object = $redis->get($objectID);
+        if ($object === false) return listen($queueID);
 
         return unserialize($object);
     }

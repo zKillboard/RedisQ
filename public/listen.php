@@ -10,7 +10,10 @@ if ($queueID === null) {
     $queueID = RedisQ\IP::get();
 }
 
-$package = unserialize(RedisQ\RedisQ::listen($queueID));
+$ttw = (int) @$_GET['ttw'];
+if ($ttw == 0) $ttw = 10;
+
+$package = unserialize(RedisQ\RedisQ::listen($queueID, $ttw));
 if ($package === false) $package = null;
 
 $response = ['package' => $package];
