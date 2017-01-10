@@ -9,6 +9,20 @@ If no killmail has come in for 10 seconds, you'll receive a null package, exampl
 
 The server will remember the calling IP for up to 3 hours, therefore, pauses in your code will not cause you to miss out on killmails.
 
+##### How do I identify myself?
+
+RedisQ will use your IP address by default, however, if you'd like to send a custom ID use the queueID parameter. Example:
+
+    http://redisq.zkillboard.com/listen.php?queueID=Voltron9000
+
+##### How can I wait less than 10 seconds if there isn't a new killmail?
+
+By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To wait less than this 10 seconds, you can use the ttw parameter, which is short for timeToWait. Example:
+
+    http://redisq.zkillboard.com/listen.php?ttw=1
+
+And yes, you can combine the ttw and queueID parameters.
+
 Please Note: You don't need Redis to use this service, its only called RedisQ because the service itself is powered by Redis.
 
 #### FAQ
