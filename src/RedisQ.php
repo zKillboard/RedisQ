@@ -45,14 +45,15 @@ class RedisQ
 
         self::registerListener($rQueueID);
 
-        $pop = $redis->blPop($rQueueID, $timeToWait);
-        if (!isset($pop[1])) {
-            return;
-        }
+        do {
+            $pop = $redis->blPop($rQueueID, $timeToWait);
+            if (!isset($pop[1])) {
+                return;
+            }
 
-        $objectID = $pop[1];
-        $object = $redis->get($objectID);
-        if ($object === false) return listen($queueID, $timeToWait);
+            $objectID = $pop[1];
+            $object = $redis->get($objectID);
+        } while ($object === false);
 
         return unserialize($object);
     }
