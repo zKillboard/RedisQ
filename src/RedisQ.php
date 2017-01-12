@@ -52,7 +52,7 @@ class RedisQ
 
         $objectID = $pop[1];
         $object = $redis->get($objectID);
-        if ($object === false) return listen($queueID);
+        if ($object === false) return listen($queueID, $timeToWait);
 
         return unserialize($object);
     }
