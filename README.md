@@ -33,7 +33,7 @@ It really is very, very simple. All you have to do is point something at https:/
 
   ```
   $raw = file_get_contents("https://redisq.zkillboard.com/listen.php");
-  $json = json_decode($raw);
+  $json = json_decode($raw, true);
   $killmail = $json['package'];
   ```
   
