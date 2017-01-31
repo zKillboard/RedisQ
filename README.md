@@ -2,7 +2,7 @@
 
 # RedisQ
 
-A simple queue service using Redis as the backend. All you have to do is point your code to http://redisq.zkillboard.com/listen.php. Then parse the JSON that you receive and do anything you like with it.
+A simple queue service using Redis as the backend. All you have to do is point your code to https://redisq.zkillboard.com/listen.php. Then parse the JSON that you receive and do anything you like with it.
 
 If no killmail has come in for 10 seconds, you'll receive a null package, example:
 {"package":null}
@@ -13,13 +13,13 @@ The server will remember the calling IP for up to 3 hours, therefore, pauses in 
 
 RedisQ will use your IP address by default, however, if you'd like to send a custom ID use the queueID parameter. Example:
 
-    http://redisq.zkillboard.com/listen.php?queueID=Voltron9000
+    https://redisq.zkillboard.com/listen.php?queueID=Voltron9000
 
 ##### How can I wait less than 10 seconds if there isn't a new killmail?
 
 By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To wait less than this 10 seconds, you can use the ttw parameter, which is short for timeToWait. Example:
 
-    http://redisq.zkillboard.com/listen.php?ttw=1
+    https://redisq.zkillboard.com/listen.php?ttw=1
 
 And yes, you can combine the ttw and queueID parameters.
 
@@ -29,10 +29,10 @@ Please Note: You don't need Redis to use this service, its only called RedisQ be
 
 ###### So, this seems too easy. What do I have to do again?
 
-It really is very, very simple. All you have to do is point something at http://redisq.zkillboard.com/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's an example of getting a killmail with PHP
+It really is very, very simple. All you have to do is point something at https://redisq.zkillboard.com/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's an example of getting a killmail with PHP
 
   ```
-  $raw = file_get_contents("http://redisq.zkillboard.com/listen.php");
+  $raw = file_get_contents("https://redisq.zkillboard.com/listen.php");
   $json = json_decode($raw);
   $killmail = $json['package'];
   ```
