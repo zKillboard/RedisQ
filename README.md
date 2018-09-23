@@ -9,6 +9,10 @@ If no killmail has come in for 10 seconds, you'll receive a null package, exampl
 
 The server will remember the calling IP for up to 3 hours, therefore, pauses in your code will not cause you to miss out on killmails.
 
+##### Do I need Redis to use this service?
+
+You don't need Redis to use this service, its only called RedisQ because the service itself is powered by Redis.
+
 ##### How do I identify myself?
 
 RedisQ will use your IP address by default, however, if you'd like to send a custom ID use the queueID parameter. Example:
@@ -22,8 +26,6 @@ By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To 
     https://redisq.zkillboard.com/listen.php?ttw=1
 
 And yes, you can combine the ttw and queueID parameters.
-
-Please Note: You don't need Redis to use this service, its only called RedisQ because the service itself is powered by Redis.
 
 #### FAQ
 
@@ -55,7 +57,7 @@ Not at this time. I went with stupidly simple simplicity when I made this and di
 
 Websockets are great, sure, but I wanted to write something that was damn easy to implement in any language. RedisQ isn't trying to be fancy like websockets, it is only trying to disemminate killmails in a quick and very simple fashion.
 
-If you really want to use websockets to listen to zKillboard's killmails, credit goes to [andimiller](https://github.com/andimiller) for creating a websocket that listens to RedisQ. The endpoint is: [wss://api.pizza.moe/stream/killmails/](wss://api.pizza.moe/stream/killmails/) and you can find more documentation here as well: https://api.pizza.moe/ and the source can be found at https://github.com/xxpizzaxx/zkb-ws-relay
+If you really want to use websockets use zkill's websocket service. Documentation can be found here: https://github.com/zKillboard/zKillboard/wiki/Websocket
 
 ###### Why is it called RedisQ?
 
