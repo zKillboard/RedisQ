@@ -35,15 +35,24 @@ class RedisQ
         $allQueues->add(time(), $queueID);
     }
 
-    public function listen($queueID, $timeToWait = 10, $filterValue = null)
+    public function listen($queueID, $ip, $timeToWait = 10, $filterValue = null)
     {
         global $redis;
 
         $timeToWait = max(1, min(10, $timeToWait));
+            
+        if ($ip != "37.59.50.21" && $redis->get("redisQ:banned:$ip") == "true")  {
+            sleep(10);
+            header("Location: /banned.html", 302);
+            exit();
+        }
 
         $rQueueID = "redisQ:queueID:$queueID";
-        $wQueueID = "$rQueueID:w";
+        $wQueueID = "redisQ:accessID:$ip";
         if ($redis->set($wQueueID, true, Array('nx', 'ex'=>15)) === false) {
+            $redis->incr("redisQ:queueID:429count:$ip");
+            $redis->expire("redisQ:queueID:429count:$ip", 300);
+            if ($redis->get("redisQ:queueID:429count:$ip") > 30) $redis->setex("redisQ:banned:$ip", 10000, "true");
             header('HTTP/1.1 429 Too many requests.');
             exit();
         }

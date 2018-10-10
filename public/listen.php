@@ -6,8 +6,9 @@ $queueID = @$_POST['queueID'];
 if ($queueID === null) {
     $queueID = @$_GET['queueID'];
 }
+$ip = RedisQ\IP::get();
 if ($queueID === null) {
-    $queueID = RedisQ\IP::get();
+    $queueID = $ip;
 }
 
 $ttw = (int) @$_GET['ttw'];
@@ -17,7 +18,7 @@ if ($ttw < 0 || $ttw > 10) $ttw = 10;
 $filterValue = @$_GET['filterValue'];
 $filterValue = $filterValue != null ? (int) $filterValue : null;
 
-$package = unserialize(RedisQ\RedisQ::listen($queueID, $ttw, $filterValue));
+$package = unserialize(RedisQ\RedisQ::listen($queueID, $ip, $ttw, $filterValue));
 if ($package === false) $package = null;
 
 $response = ['package' => $package];
