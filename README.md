@@ -49,6 +49,10 @@ Yes, RedisQ identifies you based on the calling IP address and will remember you
 
 No, there isn't a rate limit. By nature, if there isn't a killmail to give to you, RedisQ will make you wait up to 10 seconds before returning a null package to you. If there is a large amount of killmails to give to you, feel free to hit RedisQ as fast as you like and it'll return the killmails to you as quickly as you can retrieve them.
 
+###### Can I use more than one connection on RedisQ?
+
+Only one connection at a time is allowed. If you try for more the extra connections will receive a http 429 error. Too many 429 errors will cause your IP and userid (if provided) to be temporarily banned for several hours.
+
 ###### Can I subscribe to just my pilot's / character's / alliance's killmails?
 
 Not at this time. I went with stupidly simple simplicity when I made this and didn't bother with any code for filters and/or subscriptions. You can easily write the code on your end to filter the killmails to your preferences.
