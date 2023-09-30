@@ -4,7 +4,7 @@ namespace RedisQ;
 
 class RedisQ
 {
-    public function queueObject($object)
+    public static function queueObject($object)
     {
         global $redis;
 
@@ -29,13 +29,13 @@ class RedisQ
         $multi->exec();
     }
 
-    public function registerListener($queueID)
+    public static function registerListener($queueID)
     {
         $allQueues = new RedisTtlSortedSet('redisQ:allQueues');
         $allQueues->add(time(), $queueID);
     }
 
-    public function listen($queueID, $ip, $timeToWait = 10, $filterValue = null)
+    public static function listen($queueID, $ip, $timeToWait = 10, $filterValue = null)
     {
         global $redis;
 
@@ -80,13 +80,13 @@ class RedisQ
         return $object;
     }
 
-    protected function matchesFilter($filterValue, $object)
+    protected static function matchesFilter($filterValue, $object)
     {
         if ($filterValue == null) return $object;
         return self::recursive_array_search($filterValue, unserialize($object)) ? $object : false;
     }
 
-    protected function recursive_array_search($needle, $haystack) {
+    protected static function recursive_array_search($needle, $haystack) {
         foreach($haystack as $key=>$value) {
             $current_key = $key;
             if ($needle === $value || (is_array($value) && self::recursive_array_search($needle, $value) !== false)) {
