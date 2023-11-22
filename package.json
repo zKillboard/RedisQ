@@ -1,0 +1,11 @@
+{
+  "name": "redisq.zkillbaord.com",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "fundamen": "^0.2.1"
+  }
+}
