@@ -8,15 +8,19 @@ module.exports = {
 async function post(req, res, app) {
     try {
         const pass = req.query.pass;
-        const sack = req.body || null; // can't use the word package, so we'll use sack!
+        const sack = decodeURI(req.query.package); // can't use the word package, so we'll use sack!
 
         if (process.env.pass !== pass) return {status_code: 401};
         if (sack === null) return {status_code: 400};
 
         const objectID = 'redisQ:object:' + Date.now();
-        const multi = await app.redis.multi()
-        await multi.setex(objectID, 9600, JSON.stringify(sack));
-        for (let queueID of await app.redis.keys('redisQ:queue:*')) await multi.lpush('redisQ:list:' + queueID.replace('redisQ:queue:', ''), objectID);
+        const multi = await app.redis.multi();
+        await multi.setex(objectID, 9600, sack);
+        for (let queueID of await app.redis.keys('redisQ:queue:*')) {
+		const listkey = 'redisQ:list:' + queueID.replace('redisQ:queue:', '');
+		await multi.lpush(listkey, objectID);
+		await multi.expire(listkey, 9600);
+	}
         await multi.exec();
 
         return {json: {success: true}}

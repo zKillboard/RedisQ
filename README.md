@@ -7,7 +7,7 @@ A simple queue service using Redis as the backend. All you have to do is point y
 If no killmail has come in for 10 seconds, you'll receive a null package, example:
 {"package":null}
 
-The server will remember the calling IP for up to 3 hours, therefore, pauses in your code will not cause you to miss out on killmails.
+The server will remember your queueID for up to 3 hours, therefore, pauses in your code will not cause you to miss out on killmails.
 
 ##### Do I need Redis to use this service?
 
@@ -15,7 +15,7 @@ You don't need Redis to use this service, its only called RedisQ because the ser
 
 ##### How do I identify myself?
 
-RedisQ will use your IP address by default, however, if you'd like to send a custom ID use the queueID parameter. Example:
+RedisQ will use the parameter queueID to identify you. This field is required! Example:
 
     https://redisq.zkillboard.com/listen.php?queueID=Voltron9000
 
@@ -25,7 +25,7 @@ By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To 
 
     https://redisq.zkillboard.com/listen.php?ttw=1
 
-And yes, you can combine the ttw and queueID parameters.
+And yes, you can combine the ttw and queueID parameters. The code will enforce a minimum of 1 and a maximum of 10 seconds.
 
 #### FAQ
 
@@ -34,7 +34,7 @@ And yes, you can combine the ttw and queueID parameters.
 It really is very, very simple. All you have to do is point something at https://redisq.zkillboard.com/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's an example of getting a killmail with PHP
 
   ```
-  $raw = file_get_contents("https://redisq.zkillboard.com/listen.php");
+  $raw = file_get_contents("https://redisq.zkillboard.com/listen.php?queueID=YourIdHere");
   $json = json_decode($raw, true);
   $killmail = $json['package'];
   ```
@@ -43,13 +43,15 @@ That's it, really. You now have a killmail. Put that into a loop and you can kee
 
 ###### Can I have pauses between requests without missing any killmails?
 
-Yes, RedisQ identifies you based on the calling IP address and will remember you for up to 3 hours. So you can setup cron jobs to run every minute, 5 minutes, 15 minutes, etc. and not worry about missing any of the killmails.
+Yes, RedisQ identifies you based on your queueID and will remember you for up to 3 hours. So you can setup cron jobs to run every minute, 5 minutes, 15 minutes, etc. and not worry about missing any of the killmails.
 
 ###### Is there a rate limit on RedisQ?
 
 No, there isn't a rate limit. By nature, if there isn't a killmail to give to you, RedisQ will make you wait up to 10 seconds before returning a null package to you. If there is a large amount of killmails to give to you, feel free to hit RedisQ as fast as you like and it'll return the killmails to you as quickly as you can retrieve them.
 
 ###### Can I use more than one connection on RedisQ?
+
+(This sections is currently deprecated, perhaps only temporarily) 
 
 Only one connection at a time is allowed. If you try for more the extra connections will receive a http 429 error. Too many 429 errors will cause your IP and userid (if provided) to be temporarily banned for several hours.
 
@@ -67,3 +69,6 @@ If you really want to use websockets use zkill's websocket service. Documentatio
 
 Because I used Redis to implement what I was trying to do, it's a queue type service, and so I went with the completely unoriginal name RedisQ.
 
+###### Why are you using .php extension when RedisQ isn't using PHP?
+
+The initial version of RedisQ utilized PHP as the backend language of choice.  However, a subsequent rewrite is now using NodeJS.  To keep things simple and allow for great backwards compatibility the endpoints kept their .php extension.
