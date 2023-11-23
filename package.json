@@ -6,6 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "fundamen": "^0.2.1"
+    "fundamen": "^0.2.*"
   }
 }
