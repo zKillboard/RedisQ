@@ -2,7 +2,7 @@
 
 module.exports = {
 	paths: '/listen.php',
-	get: get,
+	get: get
 }
 
 async function get(req, res, app) {
@@ -24,6 +24,7 @@ async function get(req, res, app) {
 		} while (sackID == null && t <= 10);
 		const sack = sackID == null ? null : JSON.parse(await app.redis.get(sackID));
 
+        if (queueID.length == 0) return {status_code: 400};
 		return {json: {package: sack}, 'cors': '*'};
 	} catch (e) {
 		console.error(e);
