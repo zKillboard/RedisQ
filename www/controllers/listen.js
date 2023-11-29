@@ -21,7 +21,7 @@ async function get(req, res, app) {
 				do { await app.sleep(100); } while ((Date.now() - start) < 1000);
 				t = t + 1; 
 			}
-		} while (sackID == null && t <= 10);
+		} while (sackID == null && t <= ttw);
 		const sack = sackID == null ? null : JSON.parse(await app.redis.get(sackID));
 
         if (queueID.length == 0) return {status_code: 400};
