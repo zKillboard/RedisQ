@@ -9,6 +9,8 @@ Group=www-data
 Environment=PATH=/usr/bin:/usr/local/bin
 EnvironmentFile=/var/www/redisq.zkillboard.com/.env
 WorkingDirectory=/var/www/redisq.zkillboard.com
+StandardOutput=append:/var/log/redisq/output.log
+StandardError=append:/var/log/redisq/error.log
 
 [Install]
 WantedBy=multi-user.target
