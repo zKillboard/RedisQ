@@ -7,7 +7,7 @@ module.exports = {
 
 async function get(req, res, app) {
 	try {
-		const queueID = req.query.queueID || ''; 
+		const queueID = (req.query.queueID || '').trim();
 		const ttw = Math.min(10, Math.max(1, parseInt(req.query.ttw || 10)));
 		let sackID, t = 0;
 
@@ -15,7 +15,12 @@ async function get(req, res, app) {
 		    await app.redis.setex('redisQ:queue:' + queueID, 9600, ".");
         }
 		do {
-			sackID = await app.redis.rpop('redisQ:list:' + queueID);
+            let repeat = false;
+            let count = 0;
+            do {
+			    sackID = await app.redis.rpop('redisQ:list:' + queueID);
+                count++;
+            } while (sackID != null && await app.redis.get(sackID) == null && count < 25000);
 			if (sackID == null) {
 				const start = Date.now();
 				do { await app.sleep(100); } while ((Date.now() - start) < 1000);
