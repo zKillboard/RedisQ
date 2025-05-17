@@ -13,12 +13,13 @@ async function post(req, res, app) {
 		if (process.env.pass !== pass) return {status_code: 401};
 		if (sack === null) return {status_code: 400};
 
-		const objectID = 'redisQ:object:' + Date.now();
+        const now = Date.now();
+		const objectID = 'redisQ:object:' + now;
 		const multi = await app.redis.multi();
 		await multi.setex(objectID, 9600, sack);
 		for (let queueID of await app.redis.keys('redisQ:queue:*')) {
 			const listkey = 'redisQ:list:' + queueID.replace('redisQ:queue:', '');
-			await multi.lpush(listkey, objectID);
+			await multi.lpush(listkey, now);
 			await multi.expire(listkey, 9600);
 		}
 		await multi.exec();
