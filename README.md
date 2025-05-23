@@ -2,7 +2,7 @@
 
 # RedisQ
 
-A simple queue service using Redis as the backend. All you have to do is point your code to https://redisq.zkillboard.com/listen.php. Then parse the JSON that you receive and do anything you like with it.
+A simple queue service using Redis as the backend. All you have to do is point your code to https://zkillredisq.stream/listen.php. Then parse the JSON that you receive and do anything you like with it.
 
 If no killmail has come in for 10 seconds, you'll receive a null package, example:
 {"package":null}
@@ -17,13 +17,13 @@ You don't need Redis to use this service, its only called RedisQ because the ser
 
 RedisQ will use the parameter queueID to identify you. This field is required! Example:
 
-    https://redisq.zkillboard.com/listen.php?queueID=Voltron9000
+    https://zkillredisq.stream/listen.php?queueID=Voltron9000
 
 ##### How can I wait less than 10 seconds if there isn't a new killmail?
 
 By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To wait less than this 10 seconds, you can use the ttw parameter, which is short for timeToWait. Example:
 
-    https://redisq.zkillboard.com/listen.php?ttw=1
+    https://zkillredisq.stream/listen.php?queueID=Voltron9000&ttw=1
 
 And yes, you can combine the ttw and queueID parameters. The code will enforce a minimum of 1 and a maximum of 10 seconds.
 
@@ -31,10 +31,10 @@ And yes, you can combine the ttw and queueID parameters. The code will enforce a
 
 ###### So, this seems too easy. What do I have to do again?
 
-It really is very, very simple. All you have to do is point something at https://redisq.zkillboard.com/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's an example of getting a killmail with PHP
+It really is very, very simple. All you have to do is point something at https://zkillredisq.stream/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's an example of getting a killmail with PHP
 
   ```
-  $raw = file_get_contents("https://redisq.zkillboard.com/listen.php?queueID=YourIdHere");
+  $raw = file_get_contents("https://zkillredisq.stream/listen.php?queueID=YourIdHere");
   $json = json_decode($raw, true);
   $killmail = $json['package'];
   ```
