@@ -7,8 +7,8 @@ Restart=always
 User=www-data
 Group=www-data
 Environment=PATH=/usr/bin:/usr/local/bin
-EnvironmentFile=/var/www/redisq.zkillboard.com/.env
-WorkingDirectory=/var/www/redisq.zkillboard.com
+EnvironmentFile=/var/www/zkillredisq.stream/.env
+WorkingDirectory=/var/www/zkillredisq.stream
 StandardOutput=append:/var/log/redisq/output.log
 StandardError=append:/var/log/redisq/error.log
 
