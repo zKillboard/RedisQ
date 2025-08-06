@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs').promises;
+
 module.exports = {
     paths: '/queue.php',
     post: post,
@@ -13,7 +15,11 @@ async function post(req, res, app) {
         if (process.env.pass !== pass) return {status_code: 401};
         if (sack === null) return {status_code: 400};
 
-        const objectID = 'redisQ:object:' + Date.now();
+        const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        const objectID = 'redisQ:object:' + id;
+
+        //await fs.writeFile('./www/public/packages/' + id + '.json', sack, 'utf8');
+
         const multi = await app.redis.multi();
         await multi.setex(objectID, 9600, sack);
         for (let queueID of await app.redis.keys('redisQ:queue:*')) {
