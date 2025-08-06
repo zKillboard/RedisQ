@@ -27,16 +27,31 @@ By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To 
 
 And yes, you can combine the ttw and queueID parameters. The code will enforce a minimum of 1 and a maximum of 10 seconds.
 
+#### Limitations
+
+- You may have one (1) request being handled at a time per queueID. Additional requests being served while another request is already polling will resolve with http code 429.
+- You may request at a limit of two (2) requests per second per IP address.  This limitations is enforced by CloudFlare - if you exceed this limitation your request will resolve with http code 429.
+
 #### FAQ
 
 ###### So, this seems too easy. What do I have to do again?
 
-It really is very, very simple. All you have to do is point something at https://zkillredisq.stream/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's an example of getting a killmail with PHP
+It really is very, very simple. All you have to do is point something at https://zkillredisq.stream/listen.php, that can be curl, file_get_contents, wget, etc. etc. Here's are examples of getting a killmail with PHP and Python:
 
-  ```
+  ```php
+  <?php
+
   $raw = file_get_contents("https://zkillredisq.stream/listen.php?queueID=YourIdHere");
   $json = json_decode($raw, true);
   $killmail = $json['package'];
+  ```
+
+  ```python
+  import requests
+
+  r = requests.get("https://zkillredisq.stream/listen.php?queueID=YourIdHere")
+  killmail = r.json()["package"]
+  print(killmail)
   ```
   
 That's it, really. You now have a killmail. Put that into a loop and you can keep feeding yourself all the killmails as zKillboard gets them.
