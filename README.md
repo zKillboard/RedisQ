@@ -1,5 +1,3 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zKillboard/RedisQ/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zKillboard/RedisQ/?branch=master)
-
 # RedisQ
 
 A simple queue service using Redis as the backend. All you have to do is point your code to https://redisq.zkillboard.com/listen.php. Then parse the JSON that you receive and do anything you like with it.
