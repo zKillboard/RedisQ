@@ -25,6 +25,11 @@ By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To 
 
 And yes, you can combine the ttw and queueID parameters. The code will enforce a minimum of 1 and a maximum of 10 seconds.
 
+#### Limitations
+
+- You may have one (1) request being handled at a time per queueID. Additional requests being served while another request is already polling will resolve with http code 429.
+- You may request at a limit of two (2) requests per second per IP address.  This limitations is enforced by CloudFlare – if you exceed this limitation your request will resolve with http code 429.
+
 #### FAQ
 
 ###### So, this seems too easy. What do I have to do again?
@@ -42,10 +47,6 @@ That's it, really. You now have a killmail. Put that into a loop and you can kee
 ###### Can I have pauses between requests without missing any killmails?
 
 Yes, RedisQ identifies you based on your queueID and will remember you for up to 3 hours. So you can setup cron jobs to run every minute, 5 minutes, 15 minutes, etc. and not worry about missing any of the killmails.
-
-###### Is there a rate limit on RedisQ?
-
-No, there isn't a rate limit. By nature, if there isn't a killmail to give to you, RedisQ will make you wait up to 10 seconds before returning a null package to you. If there is a large amount of killmails to give to you, feel free to hit RedisQ as fast as you like and it'll return the killmails to you as quickly as you can retrieve them.
 
 ###### Can I use more than one connection on RedisQ?
 
