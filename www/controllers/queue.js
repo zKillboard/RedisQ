@@ -21,7 +21,7 @@ async function post(req, res, app) {
         //await fs.writeFile('./www/public/packages/' + id + '.json', sack, 'utf8');
 
         const multi = await app.redis.multi();
-        await multi.setex(objectID, 9600, sack);
+        await multi.setex(objectID, 10800, sack);
         for (let queueID of await app.redis.keys('redisQ:queue:*')) {
             const listkey = 'redisQ:list:' + queueID.replace('redisQ:queue:', '');
             await multi.lpush(listkey, objectID);
