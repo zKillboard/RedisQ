@@ -68,8 +68,6 @@ Not at this time. I went with stupidly simple simplicity when I made this and di
 
 Websockets are great, sure, but I wanted to write something that was damn easy to implement in any language. RedisQ isn't trying to be fancy like websockets, it is only trying to disemminate killmails in a quick and very simple fashion.
 
-If you really want to use websockets use zkill's websocket service. Documentation can be found here: https://github.com/zKillboard/zKillboard/wiki/Websocket
-
 ###### Why is it called RedisQ?
 
 Because I used Redis to implement what I was trying to do, it's a queue type service, and so I went with the completely unoriginal name RedisQ.
