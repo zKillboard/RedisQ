@@ -40,7 +40,7 @@ async function get(req, res, app) {
             const objectID = split[2];
             const redirect = `https://zkillredisq.stream/object.php?objectID=${objectID}`;
             await app.sleep(Math.floor(Math.random() * 2000) + 500);
-            return {status_code: 302, redirect: redirect};
+            return {status_code: 302, 'cors': '*', redirect: redirect};
         }
         return {json: {package: null}, 'cors': '*'};
     } catch (e) {
