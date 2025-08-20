@@ -18,8 +18,6 @@ async function post(req, res, app) {
         const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
         const objectID = 'redisQ:object:' + id;
 
-        //await fs.writeFile('./www/public/packages/' + id + '.json', sack, 'utf8');
-
         const multi = await app.redis.multi();
         await multi.setex(objectID, 10800, sack);
         for (let queueID of await app.redis.keys('redisQ:queue:*')) {
