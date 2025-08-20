@@ -14,7 +14,6 @@ async function get(req, res, app) {
     try {
         lockAcquired = await app.redis.set(lockKey, "1", "NX", "EX", 30);
         if (lockAcquired !== 'OK') {
-            console.log(queueID, "429'ed"); 
             return {status_code: 429};
         }
         lockAcquired = true;
@@ -36,10 +35,14 @@ async function get(req, res, app) {
                 t = t + 1; 
             }
         } while (sackID == null && t <= ttw);
-        const sack = sackID == null ? null : JSON.parse(await app.redis.get(sackID));
-
-        if (queueID.length == 0) return {status_code: 400};
-        return {json: {package: sack}, 'cors': '*'};
+        if (sackID != null) {
+            const split = sackID.split(':');
+            const objectID = split[2];
+            const redirect = `https://zkillredisq.stream/object.php?objectID=${objectID}`;
+            await app.sleep(Math.floor(Math.random() * 2000) + 500);
+            return {status_code: 302, redirect: redirect};
+        }
+        return {json: {package: null}, 'cors': '*'};
     } catch (e) {
         console.error(e);
         return {status_code: 503};
