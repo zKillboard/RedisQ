@@ -27,7 +27,7 @@ And yes, you can combine the ttw and queueID parameters. The code will enforce a
 
 ##### Something changed with the way RedisQ works, help?
 
-As of August, 2025, a change has been implemented such that the /listen.php endpoint redirects to /object.php with an objectID for your next package.  Be sure that whatever tool you are using can accomodate redirects.
+As of August, 2025, a change has been implemented such that the /listen.php endpoint redirects to /object.php with an objectID for your next package.  Be sure that whatever tool you are using can accommodate redirects.
 
     https://zkillredisq.stream/object.php?objectID=NotRealObjectID
 
