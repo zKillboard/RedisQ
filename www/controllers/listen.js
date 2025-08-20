@@ -5,6 +5,8 @@ module.exports = {
     get: get
 }
 
+const null_redirect = `https://zkillredisq.stream/object.php?objectID=null`;
+
 async function get(req, res, app) {
     const queueID = (req.query.queueID || '').trim();
     if (queueID.length == 0) return {status_code: 429};
@@ -42,7 +44,7 @@ async function get(req, res, app) {
             await app.sleep(Math.floor(Math.random() * 2000) + 500);
             return {status_code: 302, 'cors': '*', redirect: redirect};
         }
-        return {json: {package: null}, 'cors': '*'};
+        return {status_code: 302, 'cors': '*', redirect: null_redirect };
     } catch (e) {
         console.error(e);
         return {status_code: 503};
