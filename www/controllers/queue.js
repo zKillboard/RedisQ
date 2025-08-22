@@ -26,6 +26,7 @@ async function post(req, res, app) {
             await multi.expire(listkey, 9600);
         }
         await multi.exec();
+        console.log('new package queued', objectID);
 
         return {json: {success: true}}
     } catch (e) {
