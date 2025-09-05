@@ -6,6 +6,7 @@ module.exports = {
 }
 
 const null_redirect = `https://zkillredisq.stream/object.php?objectID=null`;
+const default_ttl = parseInt(process.env.default_ttl || 10800);
 
 async function get(req, res, app) {
     const queueID = (req.query.queueID || '').trim();
@@ -21,9 +22,10 @@ async function get(req, res, app) {
         lockAcquired = true;
 
         const ttw = Math.min(10, Math.max(1, parseInt(req.query.ttw || 10)));
+        const ttl = Math.max(1, Math.min(default_ttl, parseInt(req.query.ttl || default_ttl)));
         let sackID, t = 0;
 
-        await app.redis.setex('redisQ:queue:' + queueID, 10800, ".");
+        await app.redis.setex('redisQ:queue:' + queueID, ttl, ".");
         do {
             let repeat = false;
             let count = 0;
@@ -49,6 +51,11 @@ async function get(req, res, app) {
         console.error(e);
         return {status_code: 503};
     } finally {
-        if (lockAcquired) await app.redis.del(lockKey);
+        try {
+            if (lockAcquired) await app.redis.del(lockKey);
+        } catch (ee) {
+            // we've got problems here... 
+            process.kill(process.pid, 'SIGINT');
+        }
     }
 }

@@ -7,6 +7,8 @@ module.exports = {
     post: post,
 }
 
+const default_ttl = parseInt(process.env.default_ttl || 10800);
+
 async function post(req, res, app) {
     try {
         const pass = req.body.pass;
@@ -19,16 +21,15 @@ async function post(req, res, app) {
         const objectID = 'redisQ:object:' + id;
 
         const multi = await app.redis.multi();
-        await multi.setex(objectID, 10800, sack);
+        await multi.setex(objectID, default_ttl, sack);
         for (let queueID of await app.redis.keys('redisQ:queue:*')) {
             const listkey = 'redisQ:list:' + queueID.replace('redisQ:queue:', '');
             await multi.lpush(listkey, objectID);
-            await multi.expire(listkey, 9600);
+            await multi.expire(listkey, default_ttl);
         }
         await multi.exec();
-        console.log('new package queued', objectID);
 
-        return {json: {success: true}}
+        return {json: {success: true}, 'cors': '*'}
     } catch (e) {
         console.log(e);
         await app.sleep(1000);
