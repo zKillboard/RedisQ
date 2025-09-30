@@ -64,7 +64,7 @@ Only one connection at a time is allowed. If you try for more the extra connecti
 
 Yes!  Use the filter parameter.  See the section below on RedisQ Filter Rules.
 
-	https://zkillredisq.stream/object.php?objectID=NotRealObjectID&filter=alliance_id=434243723
+	https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=alliance_id=434243723
 
 If you pass an invalid filter then no error is thrown and the request is treated as if there is no filter.
 
