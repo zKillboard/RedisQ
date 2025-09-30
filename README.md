@@ -62,7 +62,11 @@ Only one connection at a time is allowed. If you try for more the extra connecti
 
 ###### Can I subscribe to just my pilot's / character's / alliance's killmails?
 
-Not at this time. I went with stupidly simple simplicity when I made this and didn't bother with any code for filters and/or subscriptions. You can easily write the code on your end to filter the killmails to your preferences.
+Yes!  Use the filter parameter.  See the section below on RedisQ Filter Rules.
+
+	https://zkillredisq.stream/object.php?objectID=NotRealObjectID&filter=alliance_id=434243723
+
+If you pass an invalid filter then no error is thrown and the request is treated as if there is no filter.
 
 ###### Seriously? Why do this and not use websockets or something like that?
 
@@ -83,3 +87,51 @@ The URL was changed in May, 2025 to zkillredisq.stream.
 ###### How do I say RedisQ?
 
 Everyone says it different, but I say it like red-is-q.  You can say it however you want though.
+
+# RedisQ Filter Rules
+
+## 1. Operators
+- `=` : equals  
+- `!=` : not equals  
+- `<` : less than  
+- `<=` : less than or equal  
+- `>` : greater than  
+- `>=` : greater than or equal  
+
+## 2. Chaining Rules
+- **AND** (`;`): all conditions must match  
+  - Example:  
+    ```
+    alliance_id=1234;damage_done>=500
+    ```
+    → Matches only if both conditions are true.  
+
+- **OR** (`,`): at least one condition must match  
+  - Example:  
+    ```
+    alliance_id=1234,4321,5678
+    ```
+    → Matches if any of the listed conditions are true.  
+
+- **Important:** You cannot mix `;` and `,` in the same filter string.  
+
+## 3. Matching Behavior
+- Works on **any key** inside the RedisQ `package` object (deeply nested).  
+- If a key’s value is an **array**, all elements of the array are searched.  
+- Values are compared as **numbers** if both sides are numeric, otherwise as strings.  
+
+## 4. Examples
+- `character_id=5678`  
+  → true if any `character_id` equals 5678  
+
+- `damage_done>=1000`  
+  → true if any `damage_done` is ≥ 1000  
+
+- `alliance_id!=9999`  
+  → true if no matching `alliance_id` equals 9999  
+
+- `alliance_id=1234;damage_done>500`  
+  → both must match (AND)  
+
+- `character_id=1111,2222`  
+  → matches if either character ID is found  
