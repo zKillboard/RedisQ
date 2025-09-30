@@ -136,8 +136,5 @@ Everyone says it different, but I say it like red-is-q.  You can say it however 
 - `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=1111,2222`  
   → matches if either character ID is found  
 
-- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=1111,2222`  
-  → matches if either character ID is found  
-
 - `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=labels=marked`  
   → matches if any key `labels`, which could be a key or an array, equals or contains the value marked
