@@ -121,17 +121,23 @@ Everyone says it different, but I say it like red-is-q.  You can say it however 
 - Values are compared as **numbers** if both sides are numeric, otherwise as strings.  
 
 ## 4. Examples
-- `character_id=5678`  
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=5678`  
   → true if any `character_id` equals 5678  
 
-- `damage_done>=1000`  
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=damage_done>=1000`  
   → true if any `damage_done` is ≥ 1000  
 
-- `alliance_id!=9999`  
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=alliance_id!=9999`  
   → true if no matching `alliance_id` equals 9999  
 
-- `alliance_id=1234;damage_done>500`  
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=alliance_id=1234;damage_done>500`  
   → both must match (AND)  
 
-- `character_id=1111,2222`  
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=1111,2222`  
   → matches if either character ID is found  
+
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=1111,2222`  
+  → matches if either character ID is found  
+
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=labels=marked`  
+  → matches if any key `labels`, which could be a key or an array, equals or contains the value marked
