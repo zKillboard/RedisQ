@@ -38,14 +38,19 @@ async function get(req, res, app) {
         await app.redis.setex('redisQ:queue:' + queueID, ttl, ".");
         do {
 			sackID = await app.redis.rpop('redisQ:list:' + queueID);
-			if (sackID && filter) {
-				const object = JSON.parse((await app.redis.get(sackID)) || '[]');
-				if (!matchesFilter(object, filter)) {
-					sackID = null; 
+			if (sackID) {
+				let raw = await app.redis.get(sackID);
+				if (raw) {					
+					const object = JSON.parse(raw);
+					if (!matchesFilter(object, filter)) {
+						sackID = null;
+						continue;
+					}
+				} else {
+					sackID = null;
 					continue;
 				}
-			}
-			if (sackID == null) {
+			} else {
                 await app.sleep(1000);
                 t = t + 1; 
             }
