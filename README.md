@@ -21,7 +21,7 @@ RedisQ will use the parameter queueID to identify you. This field is required! E
 
 By default, RedisQ will wait up to 10 seconds for a new killmail to come in. To wait less than this 10 seconds, you can use the ttw parameter, which is short for timeToWait. Example:
 
-    https://zkillredisq.stream/listen.php?ttw=1
+    https://zkillredisq.stream/listen.php?queueID=Voltron9000&ttw=1
 
 And yes, you can combine the ttw and queueID parameters. The code will enforce a minimum of 1 and a maximum of 10 seconds.
 
