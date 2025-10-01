@@ -133,7 +133,7 @@ Everyone says it different, but I say it like red-is-q.  You can say it however 
 - `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=alliance_id=1234;damage_done>500`  
   → both must match (AND)  
 
-- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=1111,2222`  
+- `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=character_id=1111,character_id=2222`  
   → matches if either character ID is found  
 
 - `https://zkillredisq.stream/listen.php?queueID=Voltron9000&filter=labels=marked`  
