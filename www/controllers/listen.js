@@ -30,8 +30,7 @@ async function get(req, res, app) {
 		try {
 			filter = parseFilters(req.query.filter);
 		} catch (err) {
-			// Invalid filters are ignored
-			filter = null; 
+			return { status_code: 400 };
 		}
         let sackID, t = 0;
 
