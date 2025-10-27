@@ -14,10 +14,10 @@ async function get(req, res, app) {
             const listeners = await app.redis.keys('redisQ:list:*');
             ocount = objects.length;
             lcount = listeners.length;
-            setTimeout(() => { ocount = -1; lcount = -1 }, 60000);
+            setTimeout(() => { ocount = -1; lcount = -1 }, 300000);
         }
 
-        return { json: { listeners: lcount , objects: ocount }, cors: '*' };
+        return { json: { listeners: lcount , objects: ocount }, cors: '*', ttl: 300 };
     } catch (e) {
         console.error(e);
         return {status_code: 503};
