@@ -58,7 +58,7 @@ async function get(req, res, app) {
             const split = sackID.split(':');
             const objectID = split[2];
             const redirect = `/object.php?objectID=${objectID}`;
-            await app.sleep(Math.floor(Math.random() * 2000) + 500);
+            await app.sleep(Math.floor(Math.random() * 1000) + 500);
             return {status_code: 302, 'cors': '*', redirect: redirect};
         }
         return {status_code: 302, 'cors': '*', redirect: null_redirect };
