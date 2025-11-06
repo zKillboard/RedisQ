@@ -15,7 +15,15 @@ async function post(req, res, app) {
         const sack = decodeURI(req.body.package); // can't use the word package, so we'll use sack!
 
         if (process.env.pass !== pass) return {status_code: 401};
-        if (sack === null) return {status_code: 400};
+		if (sack === null) return { status_code: 400 };
+		
+		if (!sack.package && sack.zkb.href) {
+			let res = await fetch(sack.zkb.href);
+			if (res.status != 200) {
+				return { status_code: 400 };
+			}
+			sack.package = await res.json();
+		}
 
         const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
         const objectID = 'redisQ:object:' + id;
