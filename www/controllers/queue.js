@@ -19,8 +19,8 @@ async function post(req, res, app) {
 		if (sack === null) return { status_code: 400 };
 
 		let json = JSON.parse(sack);
-		if (!json.package && json.zkb.href) {
-			let res = await fetch(json.zkb.href);
+		if (!json.killmail && json.zkb.href) {
+			let res = await fetch(json.zkb.href, { headers: { 'User-Agent': 'RedisQ' } });
 			if (res.status != 200) {
 				return { status_code: 400 };
 			}
@@ -28,7 +28,7 @@ async function post(req, res, app) {
 			sack = JSON.stringify(json);
 		}
 
-		const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+		const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 		const objectID = 'redisQ:object:' + id;
 
 		const multi = await app.redis.multi();
