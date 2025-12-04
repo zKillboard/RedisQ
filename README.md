@@ -1,5 +1,6 @@
 > [!IMPORTANT]
-> # 🚨RedisQ Breaking Change
+> # 🚨RedisQ Breaking Change - NOW COMPLETE AS OF Dec. 1, 2025
+> (leaving this here for the time being)
 > Hey devs — usage of RedisQ has skyrocketed lately, and the data volume going out now far exceeds what websocket + RedisQ handled just a few months ago.
 > To keep things efficient and sustainable, I’m planning to remove the embedded killmail data from RedisQ objects. Going forward, tools will need to fetch the killmail directly from the ESI API using the provided killmail/hash.
 > I know this will break some (probably all) existing integrations, so consider this your heads-up to prepare for the change.
