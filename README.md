@@ -104,6 +104,12 @@ Yes!  Use the filter parameter.  See the section below on RedisQ Filter Rules.
 
 If you pass an invalid filter then a 400 Invalid Request error is thrown.
 
+###### Can you just redirect me to the killmail on ESI?
+
+Sure!  Use the esi paramter with value 'y' and a redirect straight to the killmail will be given instead.
+
+    https://zkillredisq.stream/listen.php?queueID=Voltron9000&esi=y
+
 ###### Seriously? Why do this and not use websockets or something like that?
 
 Websockets are great, sure, but I wanted to write something that was damn easy to implement in any language. RedisQ isn't trying to be fancy like websockets, it is only trying to disemminate killmails in a quick and very simple fashion.

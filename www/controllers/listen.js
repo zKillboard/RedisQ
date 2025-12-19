@@ -32,7 +32,7 @@ async function get(req, res, app) {
 		} catch (err) {
 			return { status_code: 400 };
 		}
-        let sackID, t = 0;
+        let sackID, t = 0, object;
 
         await app.redis.setex('redisQ:queue:' + queueID, ttl, ".");
         do {
@@ -40,7 +40,7 @@ async function get(req, res, app) {
 			if (sackID) {
 				let raw = await app.redis.get(sackID);
 				if (raw) {					
-					const object = JSON.parse(raw);
+					object = JSON.parse(raw);
 					if (!matchesFilter(object, filter)) {
 						sackID = null;
 						continue;
@@ -55,6 +55,10 @@ async function get(req, res, app) {
             }
         } while (sackID == null && t <= ttw);
 		if (sackID != null) {
+            if (req.query.esi === 'y' && object) {
+                let url = `https://esi.evetech.net/killmails/${object.killID}/${object.zkb.hash}/`;
+                return {staus_code: 302, 'cors': '*', redirect: url};
+            }
             const split = sackID.split(':');
             const objectID = split[2];
             const redirect = `/object.php?objectID=${objectID}`;
