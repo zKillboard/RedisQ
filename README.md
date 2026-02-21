@@ -1,38 +1,8 @@
 > [!IMPORTANT]
-> # 🚨RedisQ Breaking Change - NOW COMPLETE AS OF Dec. 1, 2025
-> (leaving this here for the time being)
-> Hey devs — usage of RedisQ has skyrocketed lately, and the data volume going out now far exceeds what websocket + RedisQ handled just a few months ago.
-> To keep things efficient and sustainable, I’m planning to remove the embedded killmail data from RedisQ objects. Going forward, tools will need to fetch the killmail directly from the ESI API using the provided killmail/hash.
-> I know this will break some (probably all) existing integrations, so consider this your heads-up to prepare for the change.
-> More details (and timing) will follow once I finalize the rollout plan.  The proposed change will remove the killmail object and look like this:
-```json
-{
-  "package": {
-    "killID": 130678514,
-    "zkb": {
-      "locationID": 40030969,
-      "hash": "145c457c34ce9c9e8d67e942e764d8f439b22271",
-      "fittedValue": 3373417589.45,
-      "droppedValue": 2474643537.39,
-      "destroyedValue": 900440852.06,
-      "totalValue": 3375084389.45,
-      "points": 13,
-      "npc": false,
-      "solo": false,
-      "awox": false,
-      "labels": [
-        "tz:ru",
-        "cat:6",
-        "#:5+",
-        "pvp",
-        "loc:nullsec",
-        "isk:1b+"
-      ],
-      "href": "https://esi.evetech.net/v1/killmails/130678514/145c457c34ce9c9e8d67e942e764d8f439b22271/"
-    }
-  }
-}
-```
+> # 🚨RedisQ will be sunsetted on May 31, 2026
+Please see https://github.com/zKillboard/zKillboard/wiki/API-(R2Z2) for information on the replacement.
+
+===
 
 # RedisQ
 
