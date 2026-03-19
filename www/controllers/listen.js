@@ -83,7 +83,7 @@ async function get(req, res, app) {
 			}
 		} while (sackID == null && t <= ttw);
 		if (sackID != null) {
-			if (req.query.esi && object?.package?.zkb?.hash) {
+			if (req.query.esi && object && object.package && object.package.zkb) {
 				return { status_code: 302, 'cors': '*', redirect: redirect };
 			}
 			const split = sackID.split(':');
