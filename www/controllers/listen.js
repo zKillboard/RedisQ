@@ -41,7 +41,6 @@ async function get(req, res, app) {
 		const ttl = Math.max(1, Math.min(default_ttl, parseInt(req.query.ttl || default_ttl)));
 
 		if ((Math.random() * 100) < shutdownProbability) {
-			console.log('denied!');
 			await app.sleep(3000);
 			return {
 				status_code: 403,
